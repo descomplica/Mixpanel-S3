@@ -2,7 +2,7 @@ import sys
 from datetime import datetime
 import mixpanel_api
 
-DATE_FORMAT = '%Y/%m/%d'
+DATE_FORMAT = '%Y-%m-%d'
 
 def extract_dates(start_date, end_date):
     def validate(date_str):
