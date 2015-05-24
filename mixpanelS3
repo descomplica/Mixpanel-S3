@@ -33,7 +33,7 @@ class Runner:
                 help='end date')
         parser.add_argument('--tmpdir', default="/tmp",
                 help='Temporary directory')
-        parser.add_argument('--destdir', default='mixpanel-archive',
+        parser.add_argument('--destdir', default='mixpanel/events',
                 help='Destination directory')
 
     def parse_args(self, argv):
@@ -60,8 +60,6 @@ class Runner:
 
     def run_command(self, cmd):
         print "Running: %s" % " ".join(cmd)
-        if self.args.dry:
-            return
         exit_code = subprocess.call(cmd)
         if exit_code != 0:
             raise Exception("Error: Exit code %d found for command: %s" % (exit_code, cmd))
@@ -111,7 +109,7 @@ class Runner:
             date = puller.stringify_date(date)
             print "Pulling data for %s" % date
             data_iter = self.pull_data(date)
-            s3_output_file = "%s%s" % (self.output_bucket, date)
+            s3_output_file = "%s%s/all" % (self.output_bucket, date)
             self.put_s3_string_iter(data_iter, s3_output_file, zip=True)
 
 assert (subprocess
